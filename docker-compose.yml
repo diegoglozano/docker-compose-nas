@@ -9,9 +9,11 @@ services:
     volumes:
       - ${CONFIG_ROOT:-.}/sonarr:/config
       - ${DATA_ROOT}:/data
+    ports:
+      - "8989:8989"
     restart: always
     healthcheck:
-      test: ["CMD", "curl", "--fail", "http://127.0.0.1:8989/sonarr/ping"]
+      test: ["CMD", "curl", "--fail", "http://127.0.0.1:8989/ping"]
       interval: 1m
       retries: 10
 
@@ -25,9 +27,11 @@ services:
     volumes:
       - ${CONFIG_ROOT:-.}/radarr:/config
       - ${DATA_ROOT}:/data
+    ports:
+      - "7878:7878"
     restart: always
     healthcheck:
-      test: ["CMD", "curl", "--fail", "http://127.0.0.1:7878/radarr/ping"]
+      test: ["CMD", "curl", "--fail", "http://127.0.0.1:7878/ping"]
       interval: 1m
       retries: 10
 
@@ -40,9 +44,11 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ${CONFIG_ROOT:-.}/prowlarr:/config
+    ports:
+      - "9696:9696"
     restart: always
     healthcheck:
-      test: ["CMD", "curl", "--fail", "http://127.0.0.1:9696/prowlarr/ping"]
+      test: ["CMD", "curl", "--fail", "http://127.0.0.1:9696/ping"]
       interval: 1m
       retries: 10
 
@@ -56,9 +62,11 @@ services:
     volumes:
       - ${CONFIG_ROOT:-.}/bazarr/config:/config
       - ${DATA_ROOT}:/data
+    ports:
+      - "6767:6767"
     restart: always
     healthcheck:
-      test: ["CMD", "curl", "--fail", "http://127.0.0.1:6767/bazarr/ping"]
+      test: ["CMD", "curl", "--fail", "http://127.0.0.1:6767/ping"]
       interval: 1m
       retries: 10
 
@@ -71,6 +79,8 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ${CONFIG_ROOT:-.}/seerr:/app/config
+    ports:
+      - "5055:5055"
     restart: always
     healthcheck:
       test: wget --no-verbose --tries=1 --spider http://localhost:5055/api/v1/status || exit 1
